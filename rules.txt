@@ -1,0 +1,3 @@
+Réaliser un micro back-office permettant à l'internaute :
+
+[U] de mettre à jour des produits,
