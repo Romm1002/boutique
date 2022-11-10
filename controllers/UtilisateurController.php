@@ -16,7 +16,7 @@ class UtilisateurController extends UtilisateurManager{
      * Permet d'inscrire un utilisateur
      */
     public function newUtilisateur(){
-        if(!empty($_POST['nom']) && !empty($_POST['prenom']) &&!empty($_POST['email']) && !empty($_POST['mdp'])){
+        if(!empty($_POST['nom']) && !empty($_POST['prenom']) &&!empty($_POST['email']) && !empty($_POST['mdp']) && !empty($_POST['repeatMdp'])){
             if(!is_array($this->getUser($_POST['email']))){
                 if(preg_match('^\S*(?=\S{12,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$^', $_POST['mdp'])){
                     if($_POST['mdp'] === $_POST['repeatMdp']){
@@ -64,7 +64,7 @@ class UtilisateurController extends UtilisateurManager{
             echo '
             <div class="container">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    Une erreur est survenue.
+                    Les champs ne peuvent pas être vide.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
@@ -89,8 +89,8 @@ class UtilisateurController extends UtilisateurManager{
     public function connexion(){
         $connexion = $this->getUser($_POST['email']);
 
-        if(is_array($connexion)){
-            if(!empty($_POST['email']) && !empty($_POST['mdp'])){
+        if(!empty($_POST['email']) && !empty($_POST['mdp'])){
+            if(is_array($connexion)){
                 if(password_verify($_POST['mdp'], $connexion['mdp'])){
                     $_SESSION = $connexion;
                     echo '
@@ -114,23 +114,23 @@ class UtilisateurController extends UtilisateurManager{
                 }
             }else{
                 echo '
-                    <div class="container">
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            Les champs ne peuvent pas être vide.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+                <div class="container">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Cette adresse e-mail n\'est associée à aucun compte.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
+                </div>
                 ';
             }
         }else{
             echo '
             <div class="container">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    Cette adresse e-mail n\'est associée à aucun compte.
+                    Les champs ne peuvent pas être vide.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
-            ';
+        ';
         }
     }
 
