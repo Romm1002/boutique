@@ -1,33 +1,11 @@
-<body class="pt-3 pb-3">
+<body>
     <div class="container">
         <?php
         if(!empty($_SESSION)){
             ?>
             <div class="alert alert-warning d-flex align-items-center justify-content-between">
-                Bienvenue <?=$_SESSION['email'];?>
-                <form method="post">
-                    <button type="submit" name="deconnexion" class="btn btn-danger rounded-0">Se déconnecter</button>
-                </form>
+                Bienvenue <?=$_SESSION['prenom'] . ' ' . $_SESSION['nom'];?>
             </div>
-            <?php
-        }else{
-            ?>
-            <div class="alert alert-secondary">
-                <a href="?page=utilisateurs&action=inscription" class="btn btn-primary rounded-0">S'inscrire</a>
-                <a href="?page=utilisateurs&action=connexion" class="btn btn-success rounded-0">Se connecter</a>
-            </div>
-            <?php
-        }
-
-        if(!empty($_SESSION) && $_SESSION['role'] != "utilisateur"){
-            ?>
-            <form method="post" class="bg-secondary p-4 text-dark bg-opacity-25 border border-dark">
-                <h1 class="fs-2">Créer une nouvelle catégorie</h1>
-                <label for="nom" class="form-label">Nom</label>
-                <input type="text" name="nom" id="nom" class="form-control rounded-0">
-    
-                <input type="submit" value="Ajouter" name="ajouterCategorie" class="btn btn-primary rounded-0 mt-3">
-            </form>
             <?php
         }
         ?>
@@ -42,7 +20,7 @@
                             <div class="card rounded-0 p-3 mb-2" style="width: 300px">
                                 <p style="display: flex; align-items: center; justify-content: space-between">
                                     <b><?=$categorie['nom']?></b>
-                                    <a style="width: 20px; height: 20px; display: flex; justify-content: center; align-items: center" href="?page=produits&categorie=<?=$categorie['id'];?>" class="btn btn-warning p-0 rounded-circle">
+                                    <a style="width: 20px; height: 20px; display: flex; justify-content: center; align-items: center" href="?page=produits&action=list&categorie=<?=$categorie['id'];?>" class="btn btn-warning p-0 rounded-circle">
                                         <i class="bi bi-info-lg"></i>
                                     </a>
                                 </p>

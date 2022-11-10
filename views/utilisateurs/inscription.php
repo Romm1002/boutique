@@ -1,7 +1,13 @@
-<body class="pt-3 pb-3">
+<body>
     <div class="container">
         <form method="post" class="card p-4">
             <h1>Inscription</h1>
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" name="nom" id="nom" class="form-control">
+
+            <label for="prenom" class="form-label">Prénom</label>
+            <input type="text" name="prenom" id="prenom" class="form-control">
+
             <label for="email" class="form-label">Email</label>
             <input type="email" name="email" id="email" class="form-control">
 

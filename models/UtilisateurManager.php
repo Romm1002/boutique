@@ -4,11 +4,11 @@ class UtilisateurManager extends BDD{
     /**
      * Permet d'insérer un utilisateur en BDD
      */
-    public function save($email, $mdp, $role){
-        $sql = 'INSERT INTO utilisateur(email, mdp, role)
-                VALUES(?, ?, ?)';
+    public function save($nom, $prenom, $email, $mdp, $role){
+        $sql = 'INSERT INTO utilisateur(nom, prenom, email, mdp, role)
+                VALUES(?, ?, ?, ?, ?)';
         $req = $this->co->prepare($sql);
-        $req->execute([$email, $mdp, $role]);
+        $req->execute([$nom, $prenom, $email, $mdp, $role]);
     }
 
     /**

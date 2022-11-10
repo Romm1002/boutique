@@ -7,7 +7,18 @@ class CategorieController extends CategorieManager{
     public function getCategories(){
         ob_start();
         $categories = $this->findAll();
-        require_once 'views/categories/index.php';
+        require_once 'views/categories/list.php';
+        $page = ob_get_clean();
+
+        return $page;
+    }
+
+    /**
+     * Permet d'afficher le formulaire d'ajout de catégorie
+     */
+    public function getFormAddCategorie(){
+        ob_start();
+        require_once 'views/categories/ajouter.php';
         $page = ob_get_clean();
 
         return $page;
@@ -21,7 +32,7 @@ class CategorieController extends CategorieManager{
             $this->save($_POST['nom']);
             echo '
             <div class="container">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="alert alert-success alert-dismissible fade show"  role="alert">
                     '.$_POST["nom"].' à bien été ajouté.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>

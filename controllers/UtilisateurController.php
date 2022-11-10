@@ -2,6 +2,14 @@
 
 class UtilisateurController extends UtilisateurManager{
     /**
+     * Permet de rediriger si l'utilisateur n'a pas le rôle requis
+     */
+    public function redirect($url){
+        header($url);
+    }
+
+
+    /**
      * Permet d'afficher le formulaire d'inscription
      */
     public function getFormInscription(){
@@ -18,7 +26,7 @@ class UtilisateurController extends UtilisateurManager{
     public function newUtilisateur(){
         if(!empty($_POST['email']) && !empty($_POST['mdp'])){
             $mdp = password_hash($_POST['mdp'], PASSWORD_BCRYPT);
-            $this->save($_POST['email'], $mdp, 'utilisateur');
+            $this->save($_POST['nom'], $_POST['prenom'], $_POST['email'], $mdp, 'utilisateur');
 
             echo '
             <div class="container">
@@ -68,7 +76,7 @@ class UtilisateurController extends UtilisateurManager{
                     </div>
                 </div>
                 ';
-                header('Refresh:3, url=?page=categories', true, 303);
+                header('Refresh:3, url=?page=categories&action=list', true, 303);
             }else{
                 echo '
                 <div class="container">
@@ -86,10 +94,8 @@ class UtilisateurController extends UtilisateurManager{
      *  Permet de se déconnecter
      */    
     public function deconnexion(){
-        if(isset($_SESSION)){
-            unset($_SESSION);
-            session_destroy();
-        }
+        unset($_SESSION);
+        session_destroy();
     }
 
     /**

@@ -1,4 +1,4 @@
-<body class="pt-3 pb-3">
+<body>
     <div class="container">
         <form method="post" class="card p-4">
             <h1>Connexion</h1>

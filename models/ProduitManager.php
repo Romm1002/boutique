@@ -15,6 +15,19 @@ class ProduitManager extends BDD{
     }
 
     /**
+     * Récupère les informations d'un produit en fonction de son id
+     */
+    public function getInfos($id){
+        $sql = 'SELECT *
+                FROM produit
+                WHERE id = ?';
+        $req = $this->co->prepare($sql);
+        $req->execute([$id]);
+
+        return $req->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Permet d'ajouter un produit
      */
     public function save($nom, $description, $qte, $prix, $categorie){
@@ -22,6 +35,17 @@ class ProduitManager extends BDD{
                 VALUES(?, ?, ?, ?, ?)';
         $req = $this->co->prepare($sql);
         $req->execute([$nom, $description, $qte, $prix, $categorie]);
+    }
+
+    /**
+     * Permet d'éditer une produit
+     */
+    public function edit($nom, $description, $qte, $prix, $categorie, $id){
+        $sql = 'UPDATE produit
+                SET nom = ?, description = ?, qte = ?, prix = ?, categorie = ?
+                WHERE id = ?';
+        $req = $this->co->prepare($sql);
+        $req->execute([$nom, $description, $qte, $prix, $categorie, $id]);
     }
 
     /**

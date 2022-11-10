@@ -1,4 +1,4 @@
-<body class="pt-3 pb-3">
+<body>
     <div class="container">
 
         <a href="?page=categories" class="btn btn-secondary rounded-0 mb-4">Retour</a>
