@@ -1,8 +1,5 @@
 <body>
     <div class="container">
-
-        <a href="?page=categories&action=list" class="btn btn-secondary mb-3 rounded-0">Retour</a>
-
         <div class="bg-secondary p-4 text-dark bg-opacity-25 border border-dark mt-3">
             <h1 class="fs-2">Liste des produits</h1>
             <div class="d-flex justify-content-between flex-wrap">

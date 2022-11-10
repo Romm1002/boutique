@@ -2,14 +2,6 @@
 
 class UtilisateurController extends UtilisateurManager{
     /**
-     * Permet de rediriger si l'utilisateur n'a pas le rôle requis
-     */
-    public function redirect($url){
-        header($url);
-    }
-
-
-    /**
      * Permet d'afficher le formulaire d'inscription
      */
     public function getFormInscription(){
@@ -116,6 +108,18 @@ class UtilisateurController extends UtilisateurManager{
     public function updateRoleUtilisateur(){
         if(isset($_POST['modifierRole'])){
             $this->updateRole($_POST['utilisateurs'], $_POST['idUtilisateur']);
+        }
+    }
+
+    /**
+     * Permet de savoir si l'utilisateur connecté est Admin
+     */
+    public static function isNotAdmin(){
+        if(!empty($_SESSION) && $_SESSION['role'] != 'admin'){
+            header('location:?page=categories&action=list');
+        }
+        if(empty($_SESSION)){
+            header('location:?page=categories&action=list');
         }
     }
 }

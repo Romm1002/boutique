@@ -55,9 +55,14 @@ Autoload::load();
                 ?>
             </ul>
             <?php
+            if(!empty($_SESSION) && $_SESSION['role'] == 'admin'){
+                ?>
+                <a href="?page=utilisateurs&action=list" class="btn btn-warning rounded-0">Gestion utilisateurs</a>
+                <?php
+            }
             if(!empty($_SESSION)){
                 ?>
-                <a href="?page=utilisateurs&action=deconnexion" class="btn btn-danger rounded-0">Se déconnecter</a>
+                <a href="?page=utilisateurs&action=deconnexion" class="btn btn-danger rounded-0" style="margin-left: 10px">Se déconnecter</a>
                 <?php
             }else{
                 ?>
@@ -89,20 +94,24 @@ if(isset($_GET['page'])){
                     break;
 
                 case 'ajouter':
-                    echo $ctrl->getFormAddProduit();
-
+                    UtilisateurController::isNotAdmin();
+                    
                     if(isset($_POST['ajouterProduit'])){
                         $ctrl->newProduit();
                     }
+
+                    echo $ctrl->getFormAddProduit();
                     break;
 
-                // case 'edit':
-                //     if(isset($_POST['modifierProduit'])){
-                //         $ctrl->editProduit();
-                //     }
+                case 'edit':
+                    UtilisateurController::isNotAdmin();
 
-                //     echo $ctrl->getFormEditProduit();
-                //     break;
+                    if(isset($_POST['modifierProduit'])){
+                        $ctrl->editProduit();
+                    }
+
+                    echo $ctrl->getFormEditProduit();
+                    break;
             }
             break;
 
@@ -123,11 +132,13 @@ if(isset($_GET['page'])){
                     break;
 
                 case 'ajouter':
-                    echo $ctrl->getFormAddCategorie();
+                    UtilisateurController::isNotAdmin();
 
                     if(isset($_POST['ajouterCategorie'])){
                         $ctrl->newCategorie();
                     }
+
+                    echo $ctrl->getFormAddCategorie();
                     break;
             }
             break;
@@ -137,34 +148,34 @@ if(isset($_GET['page'])){
 
             switch($_GET['action']){
                 case 'inscription':
-                    echo $ctrl->getFormInscription();
-
                     if(!empty($_POST['email']) && !empty($_POST['mdp'])){
                         $ctrl->newUtilisateur();
                     }
+
+                    echo $ctrl->getFormInscription();
                     break;
 
                 case 'connexion':
-                    echo $ctrl->getFormConnexion();
-
                     if(isset($_POST['connexion'])){
                         $ctrl->connexion();
                     }
+
+                    echo $ctrl->getFormConnexion();
                     break;
                 
                 case 'list':
+                    UtilisateurController::isNotAdmin();
+
                     if(isset($_POST['modifierRole'])){
                         $ctrl->updateRoleUtilisateur();
                     }
 
                     echo $ctrl->getUsers();
-
                     break;
 
                 case 'deconnexion':
                     $ctrl->deconnexion();
                     header('location:?page=categories&action=list');
-
                     break;
             }
 
