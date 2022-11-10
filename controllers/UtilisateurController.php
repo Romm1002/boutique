@@ -16,10 +16,9 @@ class UtilisateurController extends UtilisateurManager{
      * Permet d'inscrire un utilisateur
      */
     public function newUtilisateur(){
-        if(!empty($_POST['email']) && !empty($_POST['mdp'])){
+        if(!empty($_POST['nom']) && !empty($_POST['prenom']) &&!empty($_POST['email']) && !empty($_POST['mdp'])){
             $mdp = password_hash($_POST['mdp'], PASSWORD_BCRYPT);
             $this->save($_POST['nom'], $_POST['prenom'], $_POST['email'], $mdp, 'utilisateur');
-
             echo '
             <div class="container">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -57,28 +56,48 @@ class UtilisateurController extends UtilisateurManager{
     public function connexion(){
         $connexion = $this->getUser($_POST['email']);
 
-        if(!empty($_POST['email']) && !empty($_POST['mdp'])){
-            if(password_verify($_POST['mdp'], $connexion['mdp'])){
-                $_SESSION = $connexion;
-                echo '
-                <div class="container">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        Vous êtes connecté, redirection en cours
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        if(is_array($connexion)){
+            if(!empty($_POST['email']) && !empty($_POST['mdp'])){
+                if(password_verify($_POST['mdp'], $connexion['mdp'])){
+                    $_SESSION = $connexion;
+                    echo '
+                    <div class="container">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            Vous êtes connecté, redirection en cours.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     </div>
-                </div>
-                ';
-                header('Refresh:3, url=?page=categories&action=list', true, 303);
+                    ';
+                    header('Refresh:3, url=?page=categories&action=list', true, 303);
+                }else{
+                    echo '
+                    <div class="container">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            L\'adresse e-mail ou le mot de passe sont incorrect.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    ';
+                }
             }else{
                 echo '
-                <div class="container">
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        Une erreur est survenue.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <div class="container">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Les champs ne peuvent pas être vide.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     </div>
-                </div>
                 ';
             }
+        }else{
+            echo '
+            <div class="container">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Cette adresse e-mail n\'est associée à aucun compte.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            ';
         }
     }
 
