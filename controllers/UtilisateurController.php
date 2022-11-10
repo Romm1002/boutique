@@ -17,16 +17,49 @@ class UtilisateurController extends UtilisateurManager{
      */
     public function newUtilisateur(){
         if(!empty($_POST['nom']) && !empty($_POST['prenom']) &&!empty($_POST['email']) && !empty($_POST['mdp'])){
-            $mdp = password_hash($_POST['mdp'], PASSWORD_BCRYPT);
-            $this->save($_POST['nom'], $_POST['prenom'], $_POST['email'], $mdp, 'utilisateur');
-            echo '
-            <div class="container">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Vous avez bien été inscrit.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            if(!is_array($this->getUser($_POST['email']))){
+                if(preg_match('^\S*(?=\S{12,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$^', $_POST['mdp'])){
+                    if($_POST['mdp'] === $_POST['repeatMdp']){
+                        $mdp = password_hash($_POST['mdp'], PASSWORD_BCRYPT);
+                        $this->save($_POST['nom'], $_POST['prenom'], $_POST['email'], $mdp, 'utilisateur');
+                        echo '
+                        <div class="container">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Vous avez bien été inscrit. Vous pouvez désormais vous connecter.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        ';
+                    }else{
+                        echo '
+                        <div class="container">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Les mots de passe ne correspondent pas.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        ';
+                    }
+                }else{
+                    echo '
+                    <div class="container">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Le mot de passe n\'est pas assez long et/ou ne respecte pas le RGPD (12 caractères, 1 lettre miniscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial minimum)
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    ';
+                }
+            }else{
+                echo '
+                <div class="container">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Cette adresse e-mail est déjà utilisé pour un autre compte.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 </div>
-            </div>
-            ';
+                ';
+            }
         }else{
             echo '
             <div class="container">

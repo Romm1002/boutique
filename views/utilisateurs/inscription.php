@@ -14,6 +14,9 @@
             <label for="mdp" class="form-label">Mot de passe</label>
             <input type="password" name="mdp" id="mdp" class="form-control">
 
+            <label for="repeatMdp" class="form-label">Répétez le mot de passe</label>
+            <input type="password" name="repeatMdp" id="repeatMdp" class="form-control">
+
             <input type="submit" value="S'inscrire" class="btn btn-primary rounded-0 mt-3">
         </form>
     </div>
