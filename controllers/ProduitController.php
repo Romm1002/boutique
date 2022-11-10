@@ -45,7 +45,7 @@ class ProduitController extends ProduitManager{
      */
     public function editProduit(){
         if(!empty($_POST['nom']) && !empty($_POST['description']) && !empty($_POST['qte']) && !empty($_POST['prix']) && !empty($_POST['categorie'])){
-            $this->edit($_POST['nom'], $_POST['description'], $_POST['qte'], $_POST['prix'], $_POST['categorie'], $_GET['produit']);
+            $this->edit(htmlspecialchars($_POST['nom']), htmlspecialchars($_POST['description']), htmlspecialchars($_POST['qte']), htmlspecialchars($_POST['prix']), htmlspecialchars($_POST['categorie']), htmlspecialchars($_GET['produit']));
             echo '
             <div class="container">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -71,7 +71,7 @@ class ProduitController extends ProduitManager{
      */
     public function newProduit(){
         if(!empty($_POST['nom']) && !empty($_POST['description']) && !empty($_POST['qte']) && !empty($_POST['prix'])){
-            $this->save($_POST['nom'], $_POST['description'], $_POST['qte'], $_POST['prix'], $_POST['categorie']);
+            $this->save(htmlspecialchars($_POST['nom']), htmlspecialchars($_POST['description']), htmlspecialchars($_POST['qte']), htmlspecialchars($_POST['prix']), htmlspecialchars($_POST['categorie']));
             echo '
             <div class="container">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">

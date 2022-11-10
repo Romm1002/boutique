@@ -29,7 +29,7 @@ class CategorieController extends CategorieManager{
      */
     public function newCategorie(){
         if(!empty($_POST['nom'])){
-            $this->save($_POST['nom']);
+            $this->save(htmlspecialchars($_POST['nom']));
             echo '
             <div class="container">
                 <div class="alert alert-success alert-dismissible fade show"  role="alert">
@@ -55,7 +55,7 @@ class CategorieController extends CategorieManager{
      */
     public function updateCategorie(){
         if(!empty($_POST['newNom'])){
-            $this->update($_POST['newNom'], $_POST['idCategorie']);
+            $this->update(htmlspecialchars($_POST['newNom']), htmlspecialchars($_POST['idCategorie']));
             echo '
             <div class="container">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">

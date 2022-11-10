@@ -21,7 +21,7 @@ class UtilisateurController extends UtilisateurManager{
                 if(preg_match('^\S*(?=\S{12,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$^', $_POST['mdp'])){
                     if($_POST['mdp'] === $_POST['repeatMdp']){
                         $mdp = password_hash($_POST['mdp'], PASSWORD_BCRYPT);
-                        $this->save($_POST['nom'], $_POST['prenom'], $_POST['email'], $mdp, 'utilisateur');
+                        $this->save(htmlspecialchars($_POST['nom']), htmlspecialchars($_POST['prenom']), htmlspecialchars($_POST['email']), $mdp, 'utilisateur');
                         echo '
                         <div class="container">
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -159,7 +159,7 @@ class UtilisateurController extends UtilisateurManager{
      */
     public function updateRoleUtilisateur(){
         if(isset($_POST['modifierRole'])){
-            $this->updateRole($_POST['utilisateurs'], $_POST['idUtilisateur']);
+            $this->updateRole(htmlspecialchars($_POST['utilisateurs']), htmlspecialchars($_POST['idUtilisateur']));
         }
     }
 
